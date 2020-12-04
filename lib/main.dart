@@ -187,24 +187,27 @@ class _WeatherAppState extends State<WeatherApp> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        forecastElement(
-                            1,
-                            abbreviationForecast[0],
-                            minTemperatureForecast[0],
-                            maxTemperatureForecast[0]),
-                        forecastElement(
-                            2,
-                            abbreviationForecast[1],
-                            minTemperatureForecast[1],
-                            maxTemperatureForecast[1]),
-                        forecastElement(
-                            3,
-                            abbreviationForecast[2],
-                            minTemperatureForecast[2],
-                            maxTemperatureForecast[2]),
-                      ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          forecastElement(
+                              1,
+                              abbreviationForecast[0],
+                              minTemperatureForecast[0],
+                              maxTemperatureForecast[0]),
+                          forecastElement(
+                              2,
+                              abbreviationForecast[1],
+                              minTemperatureForecast[1],
+                              maxTemperatureForecast[1]),
+                          forecastElement(
+                              3,
+                              abbreviationForecast[2],
+                              minTemperatureForecast[2],
+                              maxTemperatureForecast[2]),
+                        ],
+                      ),
                     ),
                     Column(
                       children: <Widget>[
@@ -257,11 +260,11 @@ Widget forecastElement(
           children: <Widget>[
             Text(
               new DateFormat.E().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 22),
+              style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             Text(
               new DateFormat.MMMd().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
@@ -273,12 +276,12 @@ Widget forecastElement(
               ),
             ),
             Text(
-              "High:" + maxTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              "High: " + maxTemperature.toString() + " ˚C",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             Text(
-              "Low:" + minTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              "Low: " + minTemperature.toString() + " ˚C",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ],
         ),
