@@ -191,21 +191,12 @@ class _WeatherAppState extends State<WeatherApp> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: <Widget>[
-                          forecastElement(
-                              1,
-                              abbreviationForecast[0],
-                              minTemperatureForecast[0],
-                              maxTemperatureForecast[0]),
-                          forecastElement(
-                              2,
-                              abbreviationForecast[1],
-                              minTemperatureForecast[1],
-                              maxTemperatureForecast[1]),
-                          forecastElement(
-                              3,
-                              abbreviationForecast[2],
-                              minTemperatureForecast[2],
-                              maxTemperatureForecast[2]),
+                          for (var i = 0; i < 4; i++)
+                            forecastElement(
+                                i + 1,
+                                abbreviationForecast[i],
+                                minTemperatureForecast[i],
+                                maxTemperatureForecast[i]),
                         ],
                       ),
                     ),
