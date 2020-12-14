@@ -60,6 +60,8 @@ flutter:
     - images/sleet.png
     - images/snow.png
     - images/thunder.png
+    - images/glass.png
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
