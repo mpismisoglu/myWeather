@@ -92,7 +92,7 @@ class _WeatherAppState extends State<WeatherApp> {
           woeid.toString() +
           "/" +
           new DateFormat("y/M/d")
-              .format(today.add(new Duration(days: i + i)))
+              .format(today.add(new Duration(days: i + 1)))
               .toString());
       var result = json.decode(locationDayResult.body);
       var data = result[0];
@@ -153,6 +153,7 @@ class _WeatherAppState extends State<WeatherApp> {
       child: temperature == null
           ? Center(child: CircularProgressIndicator())
           : Scaffold(
+              resizeToAvoidBottomPadding: false,
               appBar: AppBar(
                 actions: <Widget>[
                   Padding(
@@ -172,6 +173,7 @@ class _WeatherAppState extends State<WeatherApp> {
                                 builder: (BuildContext context) => City(
                                       name: location,
                                       temp: temperature,
+                                      woeid: woeid,
                                     )));
                           },
                         ),
@@ -184,74 +186,75 @@ class _WeatherAppState extends State<WeatherApp> {
               ),
               resizeToAvoidBottomInset: false,
               backgroundColor: Colors.transparent,
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Center(
-                        child: Image.network(
-                          "https://www.metaweather.com/static/img/weather/png/" +
-                              abbreviation +
-                              ".png",
-                          width: 100,
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          temperature.toString() + " ˚C",
-                          style: TextStyle(color: Colors.white, fontSize: 62),
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          location,
-                          style: TextStyle(color: Colors.white, fontSize: 38),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+              body: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
                       children: <Widget>[
-                        for (var i = 0; i < 4; i++)
-                          forecastElement(
-                              i + 1,
-                              abbreviationForecast[i],
-                              minTemperatureForecast[i],
-                              maxTemperatureForecast[i]),
+                        Center(
+                          child: Image.network(
+                            "https://www.metaweather.com/static/img/weather/png/" +
+                                abbreviation +
+                                ".png",
+                            width: 100,
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            temperature.toString() + " ˚C",
+                            style: TextStyle(color: Colors.white, fontSize: 62),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            location,
+                            style: TextStyle(color: Colors.white, fontSize: 38),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        width: 300,
-                        child: TextField(
-                          onSubmitted: (String input) {
-                            onTextFieldSubmitted(input);
-                          },
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                          decoration: InputDecoration(
-                              hintText: "Search another location...",
-                              hintStyle: TextStyle(
-                                  color: Colors.white, fontSize: 18.0),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.white,
-                              )),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          for (var i = 0; i < 7; i++)
+                            forecastElement(
+                                i + 1,
+                                abbreviationForecast[i],
+                                minTemperatureForecast[i],
+                                maxTemperatureForecast[i]),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Container(
+                          child: TextField(
+                            onSubmitted: (String input) {
+                              onTextFieldSubmitted(input);
+                            },
+                            style: TextStyle(color: Colors.white, fontSize: 25),
+                            decoration: InputDecoration(
+                                hintText: "Search another location...",
+                                hintStyle: TextStyle(
+                                    color: Colors.white, fontSize: 18.0),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                )),
+                          ),
                         ),
-                      ),
-                      Text(
-                        errorMessage,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.red, fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ],
+                        Text(
+                          errorMessage,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.red, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
     );
