@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
-
+import 'request.dart';
 import 'main.dart';
 
 class City extends StatefulWidget {
@@ -28,6 +28,10 @@ class _CityState extends State<City> {
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
   var abbreviationForecast = new List(7);
+  var predmins = new List(7);
+  var predmaxs = new List(7);
+  var predabbrs = new List(7);
+
   String locationApiUrl = "https://www.metaweather.com/api/location/";
 
   @override
@@ -51,6 +55,9 @@ class _CityState extends State<City> {
         minTemperatureForecast[i] = data["min_temp"].round();
         maxTemperatureForecast[i] = data["max_temp"].round();
         abbreviationForecast[i] = data["weather_state_abbr"];
+        predmaxs[i] = maxs[i];
+        predmins[i] = mins[i];
+        predabbrs[i] = abbrs[i];
       });
     }
   }
@@ -89,12 +96,18 @@ class _CityState extends State<City> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "fdd",
+                  " ",
                   style: TextStyle(fontSize: 26),
                 ),
-                Text(
-                  "fsafa",
-                  style: TextStyle(fontSize: 26),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      for (var i = 0; i < 7; i++)
+                        forecastElement2((i + 1) * 365, predabbrs[i],
+                            predmins[i], predmaxs[i]),
+                    ],
+                  ),
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

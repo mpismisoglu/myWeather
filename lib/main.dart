@@ -5,10 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
+import 'package:my_weather/request.dart';
 
 import 'city.dart';
 
 void main() {
+  fe();
+
   runApp(Weather());
 }
 
