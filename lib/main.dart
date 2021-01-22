@@ -5,13 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
-import 'package:my_weather/request.dart';
 
 import 'city.dart';
 
 void main() {
-  fe();
-
   runApp(Weather());
 }
 
@@ -36,6 +33,7 @@ class WeatherApp extends StatefulWidget {
 
 class _WeatherAppState extends State<WeatherApp> {
   final Geolocator geolocator = Geolocator();
+
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
   var abbreviationForecast = new List(7);
@@ -113,29 +111,32 @@ class _WeatherAppState extends State<WeatherApp> {
     await fetchLocationDay();
   }
 
-  _getCurrentLocation() {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+  getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
       });
 
-      _getAddressFromLatLng();
+      getAddressFromLatLng();
     }).catchError((e) {
       print(e);
     });
   }
 
-  _getAddressFromLatLng() async {
+  getAddressFromLatLng() async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
           _currentPosition.latitude, _currentPosition.longitude);
 
       setState(() {
         _currentAddress =
-            "${placemarks[0].locality}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
+            "${placemarks[0].administrativeArea}, ${placemarks[0].postalCode}, ${placemarks[0].country}";
       });
-      onTextFieldSubmitted(placemarks[0].locality);
+
+      onTextFieldSubmitted(placemarks[0].administrativeArea);
     } catch (e) {
       print(e);
     }
@@ -166,7 +167,7 @@ class _WeatherAppState extends State<WeatherApp> {
                         IconButton(
                           icon: Icon(Icons.location_city),
                           onPressed: () {
-                            _getCurrentLocation();
+                            getCurrentLocation();
                           },
                         ),
                         IconButton(
