@@ -7,6 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 
 import 'city.dart';
+import 'forecast.dart';
 
 void main() {
   runApp(Weather());
@@ -224,11 +225,11 @@ class _WeatherAppState extends State<WeatherApp> {
                       child: Row(
                         children: <Widget>[
                           for (var i = 0; i < 7; i++)
-                            forecastElement(
-                                i + 1,
-                                abbreviationForecast[i],
-                                minTemperatureForecast[i],
-                                maxTemperatureForecast[i]),
+                            forecastWidget(
+                                daysFromNow: i + 1,
+                                abbreviation: abbreviationForecast[i],
+                                minTemperature: minTemperatureForecast[i],
+                                maxTemperature: maxTemperatureForecast[i]),
                         ],
                       ),
                     ),
@@ -267,8 +268,8 @@ class _WeatherAppState extends State<WeatherApp> {
 
 Widget forecastElement(
     daysFromNow, abbreviation, minTemperature, maxTemperature) {
-  var now = new DateTime.now();
-  var oneDayFromNow = now.add(new Duration(days: daysFromNow));
+  final now = new DateTime.now();
+  final oneDayFromNow = now.add(new Duration(days: daysFromNow));
   return Padding(
     padding: const EdgeInsets.only(left: 16.0),
     child: Container(

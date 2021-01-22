@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'main.dart';
+import 'forecast2.dart';
 
 class City extends StatefulWidget {
   @override
@@ -27,9 +28,6 @@ class _CityState extends State<City> {
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
   var abbreviationForecast = new List(7);
-  var predmins = new List(7);
-  var predmaxs = new List(7);
-  var predabbrs = new List(7);
 
   String locationApiUrl = "https://www.metaweather.com/api/location/";
 
@@ -100,11 +98,11 @@ class _CityState extends State<City> {
                   child: Row(
                     children: <Widget>[
                       for (var i = 0; i < 7; i++)
-                        forecastElement(
-                            (i + 1) * 365,
-                            abbreviationForecast[i],
-                            minTemperatureForecast[i],
-                            maxTemperatureForecast[i]),
+                        forecastWidget2(
+                            daysFromNow: (i + 1) * 365,
+                            abbreviation: abbreviationForecast[i],
+                            minTemperature: minTemperatureForecast[i],
+                            maxTemperature: maxTemperatureForecast[i]),
                     ],
                   ),
                 ),
