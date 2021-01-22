@@ -28,6 +28,7 @@ class _CityState extends State<City> {
   var minTemperatureForecast = new List(7);
   var maxTemperatureForecast = new List(7);
   var abbreviationForecast = new List(7);
+  var bool = false;
 
   String locationApiUrl = "https://www.metaweather.com/api/location/";
 
@@ -54,6 +55,10 @@ class _CityState extends State<City> {
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
     }
+
+    setState(() {
+      bool = true;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -70,94 +75,45 @@ class _CityState extends State<City> {
             colorFilter: new ColorFilter.mode(
                 Colors.black.withOpacity(0.6), BlendMode.dstATop)),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            widget.name,
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-        ),
-        backgroundColor: Colors.transparent,
-        body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  " ",
-                  style: TextStyle(fontSize: 26),
+      child: bool == false
+          ? Center(child: CircularProgressIndicator())
+          : Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  widget.name,
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+              ),
+              backgroundColor: Colors.transparent,
+              body: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      for (var i = 0; i < 7; i++)
-                        forecastWidget2(
-                            daysFromNow: (i + 1) * 365,
-                            abbreviation: abbreviationForecast[i],
-                            minTemperature: minTemperatureForecast[i],
-                            maxTemperature: maxTemperatureForecast[i]),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: <Widget>[
+                            for (var i = 0; i < 7; i++)
+                              forecastWidget2(
+                                  daysFromNow: (i + 1) * 365,
+                                  abbreviation: abbreviationForecast[i],
+                                  minTemperature: minTemperatureForecast[i],
+                                  maxTemperature: maxTemperatureForecast[i]),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-Widget forecastElement(
-    daysFromNow, abbreviation, minTemperature, maxTemperature) {
-  var now = new DateTime.now();
-  var oneDayFromNow = now.subtract(new Duration(days: daysFromNow));
-  return Padding(
-    padding: const EdgeInsets.only(left: 16.0),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(205, 212, 228, 0.2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              new DateFormat.y().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
-            Text(
-              new DateFormat.MMMd().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-              child: Image.network(
-                "https://www.metaweather.com/static/img/weather/png/" +
-                    abbreviation +
-                    ".png",
-                width: 50,
               ),
             ),
-            Text(
-              "High: " + maxTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            Text(
-              "Low: " + minTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }

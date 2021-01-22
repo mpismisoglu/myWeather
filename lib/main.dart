@@ -35,9 +35,10 @@ class WeatherApp extends StatefulWidget {
 class _WeatherAppState extends State<WeatherApp> {
   final Geolocator geolocator = Geolocator();
 
-  var minTemperatureForecast = new List(7);
-  var maxTemperatureForecast = new List(7);
-  var abbreviationForecast = new List(7);
+  final minTemperatureForecast = new List(7);
+  final maxTemperatureForecast = new List(7);
+  final abbreviationForecast = new List(7);
+  var bool = false;
   Position _currentPosition;
   String _currentAddress;
   int temperature;
@@ -52,9 +53,9 @@ class _WeatherAppState extends State<WeatherApp> {
 
   @override
   void initState() {
-    super.initState();
     fetchLocation();
     fetchLocationDay();
+    super.initState();
   }
 
   void fetchSearch(String input) async {
@@ -98,12 +99,16 @@ class _WeatherAppState extends State<WeatherApp> {
               .toString());
       var result = json.decode(locationDayResult.body);
       var data = result[0];
+
       setState(() {
         minTemperatureForecast[i] = data["min_temp"].round();
         maxTemperatureForecast[i] = data["max_temp"].round();
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
     }
+    setState(() {
+      bool = true;
+    });
   }
 
   void onTextFieldSubmitted(String input) async {
@@ -155,7 +160,7 @@ class _WeatherAppState extends State<WeatherApp> {
             colorFilter: new ColorFilter.mode(
                 Colors.black.withOpacity(0.6), BlendMode.dstATop)),
       ),
-      child: temperature == null
+      child: bool == false
           ? Center(child: CircularProgressIndicator())
           : Scaffold(
               resizeToAvoidBottomPadding: false,
@@ -264,51 +269,4 @@ class _WeatherAppState extends State<WeatherApp> {
             ),
     );
   }
-}
-
-Widget forecastElement(
-    daysFromNow, abbreviation, minTemperature, maxTemperature) {
-  final now = new DateTime.now();
-  final oneDayFromNow = now.add(new Duration(days: daysFromNow));
-  return Padding(
-    padding: const EdgeInsets.only(left: 16.0),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(205, 212, 228, 0.2),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Text(
-              new DateFormat.E().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
-            Text(
-              new DateFormat.MMMd().format(oneDayFromNow),
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-              child: Image.network(
-                "https://www.metaweather.com/static/img/weather/png/" +
-                    abbreviation +
-                    ".png",
-                width: 50,
-              ),
-            ),
-            Text(
-              "High: " + maxTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            Text(
-              "Low: " + minTemperature.toString() + " ˚C",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }
