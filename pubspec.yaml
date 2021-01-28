@@ -33,6 +33,7 @@ dependencies:
   geocoding: ^1.0.5
   intl: ^0.16.1
   path_provider: ^1.6.27
+  xml: ^4.5.1
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,7 @@ flutter:
     - images/snow.png
     - images/thunder.png
     - images/glass.png
+
 
 
 

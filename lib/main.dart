@@ -5,9 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
-
+import 'dart:io';
 import 'city.dart';
 import 'forecast.dart';
+import 'prediction.dart';
+import 'package:xml/xml.dart';
 
 void main() {
   runApp(Weather());
@@ -115,6 +117,7 @@ class _WeatherAppState extends State<WeatherApp> {
     await fetchSearch(input);
     await fetchLocation();
     await fetchLocationDay();
+    createAlbum1("$input");
   }
 
   getCurrentLocation() {
