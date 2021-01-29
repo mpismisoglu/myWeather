@@ -7,6 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'main.dart';
 import 'forecast2.dart';
+import "prediction.dart";
 
 class City extends StatefulWidget {
   @override
@@ -55,6 +56,7 @@ class _CityState extends State<City> {
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
     }
+    predict1();
 
     setState(() {
       bool = true;

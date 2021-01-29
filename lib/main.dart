@@ -114,10 +114,11 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   void onTextFieldSubmitted(String input) async {
+    createAlbum1("$woeid");
+
     await fetchSearch(input);
     await fetchLocation();
     await fetchLocationDay();
-    createAlbum1("$input");
   }
 
   getCurrentLocation() {
