@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'main.dart';
 import 'forecast2.dart';
 import "prediction.dart";
+import 'forecast3.dart';
 
 class City extends StatefulWidget {
   @override
@@ -30,13 +31,32 @@ class _CityState extends State<City> {
   var maxTemperatureForecast = new List(7);
   var abbreviationForecast = new List(7);
   var bool = false;
+  var month1;
+  var month2;
+  var month3;
 
   String locationApiUrl = "https://www.metaweather.com/api/location/";
 
   @override
   void initState() {
+    predict1();
     super.initState();
+
     fetchLocationDay();
+  }
+
+  void predict1() async {
+    var result =
+        await http.get("https://60089720309f8b0017ee62d5.mockapi.io/flutter");
+    var resulted = json.decode(result.body);
+    var x = resulted.length;
+    var data = resulted[x - 1];
+    month1 = data["temp1"];
+    month2 = data["temp2"];
+    month3 = data["temp3"];
+    print(month1);
+    print(month2);
+    print(month3);
   }
 
   void fetchLocationDay() async {
@@ -56,7 +76,6 @@ class _CityState extends State<City> {
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
     }
-    predict1();
 
     setState(() {
       bool = true;
@@ -98,6 +117,25 @@ class _CityState extends State<City> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: <Widget>[
+                            forecastWidget3(
+                              predtemp: "$month1",
+                              mon: "1",
+                            ),
+                            forecastWidget3(
+                              predtemp: "$month2",
+                              mon: "2",
+                            ),
+                            forecastWidget3(
+                              predtemp: "$month3",
+                              mon: "3",
+                            )
+                          ],
+                        ),
+                      ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(

@@ -27,15 +27,6 @@ void predict(woeid) async {
   print(minTemperatureForecast);
 }
 
-void predict1() async {
-  var result =
-      await http.get("https://60089720309f8b0017ee62d5.mockapi.io/flutter");
-  var resulted = json.decode(result.body);
-  var x = resulted.length;
-  var data = resulted[x - 1];
-  print(data["min_temp"]);
-}
-
 Future<http.Response> createAlbum(String title) {
   return http.post(
     'https://jsonplaceholder.typicode.com/albums',
