@@ -39,9 +39,7 @@ class _CityState extends State<City> {
 
   @override
   void initState() {
-    predict1();
     super.initState();
-
     fetchLocationDay();
   }
 
@@ -51,12 +49,12 @@ class _CityState extends State<City> {
     var resulted = json.decode(result.body);
     var x = resulted.length;
     var data = resulted[x - 1];
-    month1 = data["temp1"];
-    month2 = data["temp2"];
-    month3 = data["temp3"];
-    print(month1);
-    print(month2);
-    print(month3);
+
+    setState(() {
+      month1 = data["temp1"];
+      month2 = data["temp2"];
+      month3 = data["temp3"];
+    });
   }
 
   void fetchLocationDay() async {
@@ -75,6 +73,8 @@ class _CityState extends State<City> {
         maxTemperatureForecast[i] = data["max_temp"].round();
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
+      await Future.delayed(Duration(seconds: 1));
+      predict1();
     }
 
     setState(() {

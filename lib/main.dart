@@ -57,6 +57,7 @@ class _WeatherAppState extends State<WeatherApp> {
   void initState() {
     fetchLocation();
     fetchLocationDay();
+    createAlbum1("2487956");
     super.initState();
   }
 
@@ -70,6 +71,7 @@ class _WeatherAppState extends State<WeatherApp> {
         woeid = result["woeid"];
         errorMessage = "";
       });
+      createAlbum1("$woeid");
     } catch (error) {
       setState(() {
         errorMessage = "Sorry, we don't have data about this city";
@@ -114,8 +116,6 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   void onTextFieldSubmitted(String input) async {
-    createAlbum1("$woeid");
-
     await fetchSearch(input);
     await fetchLocation();
     await fetchLocationDay();
