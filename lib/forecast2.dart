@@ -13,10 +13,12 @@ class forecastWidget2 extends StatelessWidget {
   final String abbreviation;
   final int minTemperature;
   final int maxTemperature;
+  final int hoursFromNow;
 
   forecastWidget2(
       {Key key,
       @required this.daysFromNow,
+      @required this.hoursFromNow,
       @required this.abbreviation,
       @required this.minTemperature,
       @required this.maxTemperature})
@@ -25,7 +27,8 @@ class forecastWidget2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = new DateTime.now();
-    final oneDayFromNow = now.subtract(new Duration(days: daysFromNow));
+    final oneDayFromNow =
+        now.subtract(new Duration(days: daysFromNow, hours: hoursFromNow));
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
       child: Container(

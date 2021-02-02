@@ -143,6 +143,7 @@ class _CityState extends State<City> {
                             for (var i = 0; i < 7; i++)
                               forecastWidget2(
                                   daysFromNow: (i + 1) * 365,
+                                  hoursFromNow: (i + 1) * 6,
                                   abbreviation: abbreviationForecast[i],
                                   minTemperature: minTemperatureForecast[i],
                                   maxTemperature: maxTemperatureForecast[i]),
