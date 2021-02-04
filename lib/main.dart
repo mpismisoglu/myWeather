@@ -36,11 +36,11 @@ class WeatherApp extends StatefulWidget {
 
 class _WeatherAppState extends State<WeatherApp> {
   final Geolocator geolocator = Geolocator();
-
   final minTemperatureForecast = new List(7);
   final maxTemperatureForecast = new List(7);
   final abbreviationForecast = new List(7);
   var bool = false;
+  var izmir = "İzmir";
   Position _currentPosition;
   String _currentAddress;
   int temperature;
@@ -223,7 +223,7 @@ class _WeatherAppState extends State<WeatherApp> {
                         ),
                         Center(
                           child: Text(
-                            location,
+                            woeid == 2344117 ? "Izmir" : location,
                             style: TextStyle(color: Colors.white, fontSize: 38),
                           ),
                         ),

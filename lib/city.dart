@@ -73,7 +73,6 @@ class _CityState extends State<City> {
         maxTemperatureForecast[i] = data["max_temp"].round();
         abbreviationForecast[i] = data["weather_state_abbr"];
       });
-      await Future.delayed(Duration(seconds: 1));
       predict1();
     }
 
@@ -101,7 +100,7 @@ class _CityState extends State<City> {
           : Scaffold(
               appBar: AppBar(
                 title: Text(
-                  widget.name,
+                  widget.woeid == 2344117 ? "Izmir" : widget.name,
                   style: TextStyle(
                     fontSize: 24,
                   ),
